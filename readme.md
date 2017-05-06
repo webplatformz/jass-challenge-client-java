@@ -73,7 +73,9 @@ To test your bot against other bots, such das the random bot, you need to start 
 
 ![Alt text](doc/images/tournamentPage.PNG?raw=true "Choose a user name")
 
-
+6. Join random strategy bots for testing. In your challenge server directory enter the command:
+`npm run bot:start`
+This will add 4 random bot teams to your tournament.
 
 ## Contributors ##
 Thanks to [fluescher](https://github.com/fluescher) for creating this skeleton.
