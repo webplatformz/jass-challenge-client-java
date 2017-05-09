@@ -11,7 +11,7 @@ import java.util.Set;
 import static java.lang.String.valueOf;
 
 class TopDownMode extends Mode {
-    private static final int FACTOR = 3;
+    private static final int FACTOR = 1;
 
     @Override
     public Trumpf getTrumpfName() {

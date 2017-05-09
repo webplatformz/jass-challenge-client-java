@@ -68,7 +68,6 @@ class TrumpfColorMode extends Mode {
 
     @Override
     public int getFactor() {
-        if(trumpfColor == Color.SPADES || trumpfColor == Color.CLUBS) return 2;
         return 1;
     }
 
