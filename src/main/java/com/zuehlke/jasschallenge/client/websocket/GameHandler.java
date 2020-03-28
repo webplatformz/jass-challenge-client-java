@@ -21,23 +21,30 @@ import static com.zuehlke.jasschallenge.messages.type.SessionChoice.AUTOJOIN;
 import static java.util.stream.Collectors.toList;
 
 public class GameHandler {
+    private static final String DEFAULT_SESSION_NAME = "tournament";
     private final Player localPlayer;
     private final SessionType sessionType;
     private GameSession gameSession;
     private PlayerMapper playerMapper;
     private boolean shifted = false;
+    private String sessionName;
 
 
     private final static Logger logger = LoggerFactory.getLogger(GameHandler.class);
 
-    public GameHandler(Player localPlayer, SessionType sessionType) {
+    public GameHandler(Player localPlayer, SessionType sessionType, String sessionName) {
         this.localPlayer = localPlayer;
         resetPlayerMapper(localPlayer);
         this.sessionType = sessionType;
+        this.sessionName = sessionName;
+    }
+
+    public GameHandler(Player localPlayer, SessionType sessionType) {
+        this(localPlayer, sessionType, DEFAULT_SESSION_NAME);
     }
 
     GameHandler(Player localPlayer, GameSession gameSession) {
-        this(localPlayer, SessionType.TOURNAMENT);
+        this(localPlayer, SessionType.TOURNAMENT, DEFAULT_SESSION_NAME);
         this.gameSession = gameSession;
     }
 
@@ -51,11 +58,17 @@ public class GameHandler {
     }
 
     public ChooseSession onRequestSessionChoice() {
-        return new ChooseSession(AUTOJOIN, "Java Client session", sessionType);
+        logger.debug("<< onRequestSessionChoice");
+        ChooseSession chooseSessionResponse = new ChooseSession(AUTOJOIN, sessionName, sessionType);
+        logger.debug(">> " + chooseSessionResponse.getData());
+        return chooseSessionResponse;
     }
 
     public ChoosePlayerName onRequestPlayerName() {
-        return new ChoosePlayerName(localPlayer.getName());
+        logger.debug("<< onRequestPlayerName");
+        ChoosePlayerName choosePlayerNameResponse = new ChoosePlayerName(localPlayer.getName());
+        logger.debug(">> " + choosePlayerNameResponse);
+        return choosePlayerNameResponse;
     }
 
     public void onDealCards(List<RemoteCard> dealCard) {
@@ -63,13 +76,15 @@ public class GameHandler {
     }
 
     public void onPlayerJoined(PlayerJoinedSession joinedPlayer) {
-        if(localPlayer.getId() == null) {
+        logger.debug("<< on onPlayerJoined: " + joinedPlayer.getPlayer().getId());
+        if (localPlayer.getId() == null) {
             localPlayer.setId(joinedPlayer.getPlayer().getId());
             localPlayer.setSeatId(joinedPlayer.getPlayer().getSeatId());
         }
     }
 
     public void onBroadCastTeams(List<RemoteTeam> remoteTeams) {
+        logger.debug("<< onBroadCastTeams: " + remoteTeams);
         final List<Team> teams = mapTeams(remoteTeams);
         final List<Player> playersInPlayingOrder = getPlayersInPlayingOrder(remoteTeams);
         gameSession = new GameSession(teams, playersInPlayingOrder);
@@ -82,6 +97,7 @@ public class GameHandler {
     }
 
     public ChooseTrumpf onRequestTrumpf() {
+        logger.debug("<< onRequestTrumpf");
         final Mode mode = localPlayer.chooseTrumpf(gameSession, shifted);
         return new ChooseTrumpf(mode.getTrumpfName(), Mapping.mapColor(mode.getTrumpfColor()));
     }
@@ -175,7 +191,7 @@ public class GameHandler {
     }
 
     private static void checkEquals(Object a, Object b, String errorMessage) {
-        if(!a.equals(b)) {
+        if (!a.equals(b)) {
             logger.warn("Expected {} to be equal to {}: {}", a, b, errorMessage);
             throw new RuntimeException(errorMessage);
         }

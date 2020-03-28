@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static java.lang.String.valueOf;
 
-class TrumpfColorMode extends Mode {
+public class TrumpfColorMode extends Mode {
 
     private final Color trumpfColor;
 
@@ -128,4 +128,18 @@ class TrumpfColorMode extends Mode {
         return card1.isHigherThan(card2) ? 1 : -1;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TrumpfColorMode that = (TrumpfColorMode) o;
+
+        return trumpfColor == that.trumpfColor;
+    }
+
+    @Override
+    public int hashCode() {
+        return trumpfColor.hashCode();
+    }
 }

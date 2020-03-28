@@ -50,4 +50,19 @@ public class ShiftMode extends Mode {
     public Comparator<Card> createRankComparator() {
         return null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ShiftMode that = (ShiftMode) o;
+
+        return getTrumpfName().equals(that.getTrumpfName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getTrumpfName().hashCode();
+    }
 }

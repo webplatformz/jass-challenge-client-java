@@ -19,6 +19,7 @@ public class GameSocket {
     }
 
     public void onMessage(Message msg) {
+        logger.debug("<< onMessage: " + msg);
         Optional<Response> response = dispatchMessage(msg);
         response.ifPresent(responseChannel::respond);
     }

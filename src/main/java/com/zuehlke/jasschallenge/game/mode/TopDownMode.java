@@ -10,7 +10,7 @@ import java.util.Set;
 
 import static java.lang.String.valueOf;
 
-class TopDownMode extends Mode {
+public class TopDownMode extends Mode {
     private static final int FACTOR = 1;
 
     @Override
@@ -57,5 +57,20 @@ class TopDownMode extends Mode {
     public String toString() {
 
         return valueOf(getTrumpfName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TopDownMode that = (TopDownMode) o;
+
+        return getTrumpfName().equals(that.getTrumpfName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getTrumpfName().hashCode();
     }
 }
