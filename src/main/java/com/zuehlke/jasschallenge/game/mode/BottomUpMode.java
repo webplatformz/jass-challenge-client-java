@@ -11,7 +11,7 @@ import java.util.Set;
 import static com.zuehlke.jasschallenge.game.mode.GeneralRules.calculateLastRoundBonus;
 import static java.lang.String.valueOf;
 
-class BottomUpMode extends Mode{
+public class BottomUpMode extends Mode {
     private static final int FACTOR = 1;
 
     @Override
@@ -26,7 +26,7 @@ class BottomUpMode extends Mode{
 
     @Override
     public int calculateRoundScore(int roundNumber, Set<Card> playedCards) {
-        if(roundNumber == Game.LAST_ROUND_NUMBER) {
+        if (roundNumber == Game.LAST_ROUND_NUMBER) {
             return calculateLastRoundBonus(FACTOR) + calculateScore(playedCards);
         }
         return calculateScore(playedCards);
@@ -38,7 +38,6 @@ class BottomUpMode extends Mode{
                 .mapToInt(card -> card.getValue().getBottomUpScore())
                 .sum();
     }
-
 
 
     @Override
@@ -59,5 +58,20 @@ class BottomUpMode extends Mode{
     @Override
     public String toString() {
         return valueOf(getTrumpfName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BottomUpMode that = (BottomUpMode) o;
+
+        return getTrumpfName().equals(that.getTrumpfName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getTrumpfName().hashCode();
     }
 }

@@ -62,7 +62,7 @@ class ApplicationBotTryout {
 
 	private static RemoteGame startGame(String targetUrl, Player myLocalPlayer, SessionType sessionType) throws Exception {
 
-		final RemoteGame remoteGame = new RemoteGame(targetUrl, myLocalPlayer, sessionType);
+		final RemoteGame remoteGame = new RemoteGame(targetUrl, myLocalPlayer, sessionType, "someSession");
 		remoteGame.start();
 		return remoteGame;
 	}

@@ -67,7 +67,7 @@ public class RemoteGameSocketTest {
         remoteGameSocket.onWebSocketMessage("{\"type\":\"REQUEST_SESSION_CHOICE\"}");
 
         verify(session.getRemote()).sendString("{\"type\":\"CHOOSE_SESSION\"," +
-                "\"data\":{\"sessionChoice\":\"AUTOJOIN\",\"sessionName\":\"Java Client Session\",\"sessionType\":\"TOURNAMENT\"}}");
+                "\"data\":{\"sessionChoice\":\"AUTOJOIN\",\"sessionName\":\"tournament\",\"sessionType\":\"TOURNAMENT\"}}");
         verify(handler).onRequestSessionChoice();
         verifyNoMoreInteractions(handler);
     }
