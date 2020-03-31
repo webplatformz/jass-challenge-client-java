@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = "com.zuehlke.jasschallenge.Application"
+mainClassName = "com.zuehlke.jasschallenge.RandomBot"
 
 compileJava {
   sourceCompatibility = '1.8'
